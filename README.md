@@ -49,123 +49,30 @@ Conectar cidadãos e pontos de coleta de resíduos eletrônicos: facilitar a loc
 
 ---
 
-## 👥 Atores
+## 💡 O projeto
 
-| Ator | Tipo | Descrição |
-|---|---|---|
-| **Cidadão** | Primário | Pessoa que deseja descartar equipamentos eletrônicos. Busca pontos de coleta, consulta orientações e agenda entregas. |
-| **Ponto de Coleta** | Primário | ONG, cooperativa, loja ou órgão público que recebe os resíduos. Gerencia agendamentos e registra os materiais recebidos. |
-| **Administrador** | Primário | Integrante da equipe do EcoDescarte que valida o cadastro dos pontos de coleta e gerencia o sistema. |
+O **EcoDescarte** é uma plataforma pensada para resolver um problema simples de entender e difícil de resolver: as pessoas têm eletrônicos parados em casa e não sabem o que fazer com eles. Celulares antigos, carregadores, pilhas, baterias e computadores acabam esquecidos em gavetas ou jogados no lixo comum, enquanto os pontos de coleta que poderiam recebê-los continuam pouco conhecidos.
 
-## 📐 Escopo
+O sistema conecta essas duas pontas. O **cidadão** consegue encontrar no mapa os pontos de coleta mais próximos que aceitam o tipo de equipamento que ele quer descartar. Ele também consulta orientações sobre como preparar o aparelho, por exemplo apagando seus dados ou separando baterias danificadas, e agenda o dia e o horário da entrega, podendo remarcar ou cancelar quando precisar.
 
-| ✅ O sistema faz | ❌ O sistema não faz |
-|---|---|
-| Cadastro e login de usuários | Coleta ou transporte dos resíduos |
-| Busca de pontos de coleta no mapa, com filtro por tipo de resíduo | Reciclagem ou tratamento dos materiais |
-| Guia de descarte | Compra, venda ou pagamento por equipamentos |
-| Agendamento, remarcação e cancelamento de entregas | Apagamento dos dados dos aparelhos (apenas orienta) |
-| Gestão de agendamentos e registro de materiais pelos pontos | Descarte industrial em grande escala |
-| Aprovação de novos pontos de coleta pelo administrador | |
+Do outro lado, os **pontos de coleta**, como ONGs, cooperativas, lojas e órgãos públicos, ganham visibilidade e organização. Eles recebem os agendamentos, confirmam ou recusam conforme a sua capacidade, registram os materiais que chegam e geram relatórios mensais, o que ajuda a comprovar o volume recolhido para a logística reversa prevista na Política Nacional de Resíduos Sólidos. Um **administrador** da plataforma valida cada novo ponto antes que ele apareça nas buscas, garantindo que o cidadão só seja direcionado a locais confiáveis.
 
----
-
-## 📋 Requisitos
-
-### Requisitos funcionais
-
-| Nº | Requisito | Descrição | Ator | Prioridade |
-|---|---|---|---|---|
-| RF01 | Manter cadastro e acesso | O sistema deve permitir o cadastro e o login com e-mail e senha para o cidadão e para o ponto de coleta. | Cidadão e Ponto de Coleta | Essencial |
-| RF02 | Buscar pontos de coleta | O sistema deve permitir a busca de pontos de coleta próximos em um mapa, com filtro por tipo de eletrônico aceito, para o cidadão. | Cidadão | Essencial |
-| RF03 | Consultar orientações | O sistema deve permitir a consulta de orientações de preparo e descarte correto de cada tipo de equipamento para o cidadão. | Cidadão | Desejável |
-| RF04 | Agendar entrega | O sistema deve permitir o agendamento, a remarcação e o cancelamento da entrega de equipamentos em um ponto de coleta para o cidadão. | Cidadão | Essencial |
-| RF05 | Gerenciar agendamentos | O sistema deve permitir a visualização, a confirmação e a recusa dos agendamentos recebidos para o ponto de coleta. | Ponto de Coleta | Essencial |
-| RF06 | Registrar materiais e emitir relatório | O sistema deve permitir o registro dos materiais recebidos (tipo, quantidade e peso) e a emissão de relatório mensal para o ponto de coleta. | Ponto de Coleta | Desejável |
-| RF07 | Aprovar ponto de coleta | O sistema deve permitir a aprovação ou a reprovação do cadastro de novos pontos de coleta para o administrador. | Administrador | Essencial |
-
-### Requisitos não funcionais
-
-| Nº | Tipo | Descrição |
-|---|---|---|
-| RNF01 | Produto | O sistema deve responder às buscas de pontos de coleta de forma rápida e eficiente. |
-| RNF02 | Produto | O sistema deve estar disponível 24 horas por dia, 7 dias por semana, com disponibilidade mínima de 99% ao mês. |
-| RNF03 | Produto | O sistema deve ter interface em português e responsiva, funcionando em celulares e computadores. |
-| RNF04 | Externo | O sistema deve armazenar as senhas criptografadas e tratar os dados pessoais conforme a LGPD (Lei nº 13.709/2018). |
-| RNF05 | Organizacional | O sistema deve ser especificado com a notação UML, e seus artefatos devem ser entregues ao fim de cada sprint de duas semanas. |
-
-### Regras de negócio
-
-| Regra | Descrição | Tipo | RF |
-|---|---|---|---|
-| RN01 | Um cidadão pode ter no máximo dois agendamentos pendentes ao mesmo tempo. | Rejeição | RF04 |
-| RN02 | Um agendamento só pode ser remarcado ou cancelado até duas horas antes do horário marcado. | Rejeição | RF04 |
-| RN03 | Ao confirmar um agendamento, o sistema deve notificar o cidadão por e-mail. | Projeção | RF05 |
-| RN04 | Um ponto de coleta só aparece na busca depois de aprovado pelo administrador. | Rejeição | RF02 e RF07 |
-| RN05 | O total recebido no mês é a soma dos pesos dos materiais registrados no período. | Produção | RF06 |
-
----
-
-## 🧩 Diagrama de Casos de Uso
-
-![Diagrama de Casos de Uso](diagramas/casos-de-uso.png)
-
-| Requisito | Caso(s) de uso | Ator |
-|---|---|---|
-| RF01 | UC01 Cadastrar-se no sistema · UC02 Fazer login | Cidadão e Ponto de Coleta |
-| RF02 | UC03 Buscar pontos de coleta | Cidadão |
-| RF03 | UC04 Consultar orientações | Cidadão |
-| RF04 | UC05 Agendar entrega · UC06 Remarcar ou cancelar entrega | Cidadão |
-| RF05 | UC07 Gerenciar agendamentos | Ponto de Coleta |
-| RF06 | UC08 Registrar materiais · UC09 Emitir relatório | Ponto de Coleta |
-| RF07 | UC10 Aprovar ponto de coleta | Administrador |
-
-## 🔄 Modelo de processo
-
-O grupo adotou o **Scrum simplificado**, com sprints de duas semanas. A justificativa completa está no relatório (Desafio 3).
-
-## 🗓️ Cronograma
-
-| Etapa / tarefa | Ago | Set | Out | Nov |
-|---|:---:|:---:|:---:|:---:|
-| Definição do sistema, escolha da ODS 12 e justificativa | ✔ | | | |
-| Pesquisa sobre descarte de eletrônicos e público-alvo | ✔ | | | |
-| Documento de Visão (Sprint 1) | | ✔ | | |
-| Escolha e justificativa do modelo de processo (Scrum) | | ✔ | | |
-| Levantamento de requisitos funcionais e não funcionais (Sprint 2) | | ✔ | ✔ | |
-| Diagrama de Casos de Uso no Draw.io (Sprint 3) | | | ✔ | |
-| Protótipos das telas e validação com pontos de coleta (Sprint 4) | | | ✔ | |
-| Plano de qualidade e casos de teste (Sprint 5) | | | | ✔ |
-| Revisão e documento final em PDF | | | | ✔ |
-| Postagem individual no Canvas (até 30/11) | | | | ✔ |
-
----
-
-## ✅ Andamento dos desafios
-
-- [x] **Desafio 1** – Cronograma de atividades
-- [x] **Desafio 2** – Escolha e justificativa da ODS
-- [ ] **Desafio 3** – Relatório do projeto *(em andamento)*
-  - [x] Visão do sistema (problema, missão, atores, objetivos e escopo)
-  - [x] Requisitos funcionais, não funcionais e regras de negócio
-  - [x] Diagrama de Casos de Uso e rastreabilidade
-  - [x] ODS
-  - [ ] Justificativa do modelo de processo
-  - [ ] Plano de qualidade e casos de teste
-- [ ] **Desafio 4**
-- [ ] **Desafio 5**
+O EcoDescarte não faz a coleta, o transporte nem a reciclagem dos resíduos. Seu papel é **informar, orientar e organizar**, para que cada equipamento chegue ao lugar certo. O sistema foi especificado para funcionar em celulares e computadores, com interface em português e proteção dos dados pessoais conforme a LGPD.
 
 ## 📁 Estrutura do repositório
 
 ```
 📦 EcoDescarte
- ┣ 📂 docs
- ┃ ┣ 📄 desafio-1-cronograma.pdf
- ┃ ┣ 📄 desafio-2-ods.pdf
- ┃ ┗ 📄 desafio-3-relatorio.pdf
- ┣ 📂 diagramas
- ┃ ┣ 📄 casos-de-uso.drawio
+ ┣ 📂 Arquivo editavel
+ ┃ ┣ 📄 CSU EcoDescarte.drawio
+ ┃ ┣ 📄 DESAFIO 1- CRONOGRAMA EXTENSÃO 5.docx
+ ┃ ┣ 📄 Desafio 2 - ODS.docx
+ ┃ ┗ 📄 Desafio 3 - Rel. Proj. Ext. 5.docx
+ ┣ 📂 Diagramas
  ┃ ┗ 🖼️ casos-de-uso.png
+ ┣ 📂 Doc
+ ┃ ┣ 📄 DESAFIO 1- CRONOGRAMA EXTENSÃO 5.pdf
+ ┃ ┣ 📄 Desafio 2 - ODS.pdf
  ┗ 📄 README.md
 ```
 
@@ -174,15 +81,6 @@ O grupo adotou o **Scrum simplificado**, com sprints de duas semanas. A justific
 - **Draw.io** – modelagem UML (Diagrama de Casos de Uso)
 - **Microsoft Word** – documentação no padrão ABNT
 - **GitHub** – versionamento e organização dos entregáveis
-
-## 📚 Referências
-
-- BALDÉ, C. P. et al. **The Global E-waste Monitor 2024**. Genebra; Bonn: ITU; UNITAR, 2024.
-- BRASIL. Lei nº 12.305, de 2 de agosto de 2010. Política Nacional de Resíduos Sólidos.
-- BRASIL. Lei nº 13.709, de 14 de agosto de 2018. Lei Geral de Proteção de Dados Pessoais (LGPD).
-- NAÇÕES UNIDAS BRASIL. **Objetivos de Desenvolvimento Sustentável**. Disponível em: https://brasil.un.org/pt-br/sdgs.
-- PRIZIBISCZKI, C. Produção mundial de lixo eletrônico é cinco vezes maior do que sua reciclagem, diz ONU. **Jornal do Brasil**, 21 mar. 2024.
-- SILVA, C. R. da. **Engenharia de Software**: Unidades 1, 2 e 3. Notas de aula. UVA, 2026.
 
 ---
 
